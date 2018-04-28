@@ -3,6 +3,13 @@
 QR码全称Quick Response Code，是由日本Denso Wave公司于1994年发明的。其目的是在制造过程中跟踪车辆; 它旨在允许高速组件扫描。QR码现在在更广泛的背景下使用，包括商业跟踪应用和针对移动电话用户的面向便利的应用（称为移动标签）。
 QR码可用于向用户显示文本，向用户的设备添加vCard联系人，打开统一资源标识符（URI）或撰写电子邮件或文本消息。有许多QR码发生器可以作为软件或在线工具使用。QR码已成为二维码中使用最多的类型之一。
 与条形码不同的是，条形码被设计为通过窄光束进行机械扫描，QR码由二维数字图像传感器检测，然后由编程的处理器进行数字分析。处理器在QR代码图像的角落定位三个独特的方块，使用第四个角附近的较小方块（或多个方块）来规范图像的大小，方向和观看角度。QR码中的小点随后被转换为二进制数并通过纠错算法进行验证。
+如下图，就是一个非常短的二维码
+![short_QRCode](https://s1.ax1x.com/2018/04/28/C8tu5V.png)
+如下图，就是一个很长的二维码
+![long_QRCode](https://s1.ax1x.com/2018/04/28/C8tQ8U.png)
+二维码中其实可以包含非常多的文字，甚至能放的下一本短篇小说。当然，这么做其实就没有必要的。限制二维码存储内容大小的主要因素在于：手机摄像头的像素水平即使在最理想的状况下也无法清晰的识别。日常生活领域里，太多的数据没有必要，基本的这些已经可以满足开发需要的。
+
+
 ### iOS开发中的二维码
 [苹果官方文档](https://developer.apple.com/library/content/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIQRCodeGenerator)中有两个关键字**inputMessage**和**inputCorrectionLevel**
 > * inputMessage
@@ -223,9 +230,24 @@ url scheme让我们可以像使用Safari打开网页的方式跳转到其他应�
 
 #### 2.登录使用
 > 这个我们就看的比较多了，比如说微信登录。当我们使用这个功能时，为了进行保密操作，往往需要配合app端进行确定操作。
+比如说下面这个bilibili的登录二维码
+
+![long_QRCode](https://s1.ax1x.com/2018/04/28/C8N1FP.png)
+
+
+其实代表了这一段字符
+> https://passport.bilibili.com/qrcode/h5/login?oauthKey=049f6272368bd38e5d6f9602436dc17b
 
 #### 3.身份证明
 > 作为个人或者某件商品的身份名片
 
 #### 4.配合app路由，打开特定页面
 > 在很多电商应用中，我们经常可以看到这个应用方式，扫描某个二维码，直接到达商品的页面。甚至有的应用把扫一扫的功能直接放置到FouceTouch上，以及Application Extension上，直接在应用外直达相关页面。
+
+#### 5.放到应用外直接触发，其实算是以上功能的一个直接使用
+iOS Application Extension
+
+![extension](https://s1.ax1x.com/2018/04/28/C8NYQg.png)
+fouce touch
+![foucetouch](https://s1.ax1x.com/2018/04/28/C8NJSS.png)
+
