@@ -23,7 +23,7 @@ H：30％
 默认值是M。
 
 ### 生成一个QRCode
-```
+```C++
 // 1、创建滤镜对象
 CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
 // 恢复滤镜的默认属性
@@ -66,7 +66,7 @@ return [UIImage imageWithCGImage:scaledImage];
 ```
 这样就会产生一个指定大小的二维码。
 假如要生成一个类似的，和微信类似的中间带一个logo的二维码
-```
+```C++
 /**
 *  生成一张带有logo的二维码
 *
@@ -124,7 +124,7 @@ return final_image;
 
 ### 识别二维码
 在识别二维码的时候，需要先设置手机的**相机权限**和**相册权限**。
-```
+```C++
 AVCaptureSession * session= [[AVCaptureSession alloc] init];
 AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
 NSError *error;
@@ -168,13 +168,13 @@ weakSelf.scanRect.size.width / screenWidth)];
 然后需要等待**- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection；**方法的输出。
 这里有几个关键点
 **metadataObjectTypes**是一个数组，这里会要求输入需要识别的种类，一半来讲，有一个二维码就可以了
-```
+```C++
 NSArray *arr = @[AVMetadataObjectTypeQRCode];
 ```
 从相册返回过来的二维码图片也是类似的。
 当然，这里其实有很多种的识别码，除了二维码，用的最多的是条形码。可以扫描条形码，返回一串数字。
 除了以上的关键方法，其实还有几个方法也会在二维码扫描中使用到。
-```
+```C++
 #pragma mark - - - AVCaptureVideoDataOutputSampleBufferDelegate的方法
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
 // 这个方法会时时调用，但内存很稳定
@@ -186,7 +186,7 @@ float brightnessValue = [[exifMetadata objectForKey:(NSString *)kCGImageProperty
 }
 ```
 brightnessValue的数值，代表是摄像头返回过来的亮度。在亮度过低的情况下，我们可以选择打开手机手电筒
-```
+```C++
 打开手电筒
 AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
 NSError *error = nil;
@@ -209,7 +209,7 @@ if ([device hasTorch]) {
 ```
 > 这里开始的时候我翻过一个错误，是否可以自动打开手电筒，后来发现，假如通过判断brightnessValue的数值实时开关，会造成手电筒闪烁。当然也可以判断亮度低到一定程序就一直打开直到扫码成功，但是这样会造成没必要的耗电，没有必要的情况下不必如此。
 另外，假如细心的人可以发现，微信的扫描二维码的镜头焦距是和照相机不同的，我们可以通过设置**videoScaleAndCropFactor**来改变。
-```
+```C++
 AVCaptureStillImageOutput* output = (AVCaptureStillImageOutput*)[self.captureSession.outputs objectAtIndex:0];  
 AVCaptureConnection *videoConnection = [output connectionWithMediaType:AVMediaTypeVideo];  
 CGFloat maxScale = videoConnection.videoMaxScaleAndCropFactor;  
